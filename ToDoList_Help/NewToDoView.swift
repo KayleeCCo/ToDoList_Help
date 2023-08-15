@@ -23,8 +23,10 @@ struct NewToDoView: View {
     
     //Bind the ToDoItems array here
         //Delete the ToDoItems array binding in iteration 2
+    @Binding var toDoItems: [ToDoItem]
     
     //Bind the showNewTask property here
+    @Binding var showNewTask : Bool
     
     var body: some View {
         VStack {
@@ -53,6 +55,8 @@ struct NewToDoView: View {
             //Add Button here, delete any code in the action and with the text "Add"
             
             Button(action: {
+                self.showNewTask = false
+                self.addTask(title: self.title, isImportant: self.isImportant)
               
             }) {
                 Text("Add")
@@ -61,23 +65,29 @@ struct NewToDoView: View {
             
             //Add a padding modifier
         }
-        .padding(.all)
-        .buttonBorderShape(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=shape: ButtonBorderShape@*/.capsule/*@END_MENU_TOKEN@*/)
-        .buttonStyle(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=Button Style@*/DefaultButtonStyle()/*@END_MENU_TOKEN@*/)
-        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
-        background()
-            .foregroundColor(/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/)
+//        .padding(.all)
+//        .buttonBorderShape(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=shape: ButtonBorderShape@*/.capsule/*@END_MENU_TOKEN@*/)
+//        .buttonStyle(/*@START_MENU_TOKEN@*//*@PLACEHOLDER=Button Style@*/DefaultButtonStyle()/*@END_MENU_TOKEN@*/)
+//        .foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
+//        .background()
+//            .foregroundColor(/*@START_MENU_TOKEN@*/.black/*@END_MENU_TOKEN@*/)
         
         
         
     }
     //Add the private function addTask here
+    
+    private func addTask(title: String, isImportant: Bool = false) {
+            
+            let task = ToDoItem(title: title, isImportant: isImportant)
+            toDoItems.append(task)
+        }
         //In Iteration 2, update the function to save input to Core Data
 }
 
 struct NewToDoView_Previews: PreviewProvider {
     static var previews: some View {
-        NewToDoView(title: "", isImportant : false)
+        NewToDoView(title: "", isImportant : false, toDoItems: .constant([]), showNewTask: .constant(true)
                     
                     
             //Add toDoItems: .constant([]) here (Iteration 1)
@@ -85,6 +95,6 @@ struct NewToDoView_Previews: PreviewProvider {
             //Delete toDoItems: .constant([]) (Iteration 2_
 
 
-        
+        )
     }
 }
